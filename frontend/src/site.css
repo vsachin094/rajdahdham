@@ -1259,6 +1259,16 @@ button:focus-visible {
   gap: 9px;
 }
 
+.footer-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-social-links a {
+  align-items: center;
+}
+
 .footer-contact svg {
   flex: 0 0 auto;
   margin-top: 1px;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Facebook, Instagram, Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const links = [
@@ -37,6 +37,14 @@ export default function Footer() {
         </div>
         <div className="footer-contact">
           <h2>{lang === 'en' ? 'Get in touch' : 'संपर्क करें'}</h2>
+          <div className="footer-social-links">
+            <a href="https://www.facebook.com/rajdahdhamofficial/" target="_blank" rel="noreferrer">
+              <Facebook size={16} /> Facebook
+            </a>
+            <a href="https://www.instagram.com/rajdahdhamofficial/" target="_blank" rel="noreferrer">
+              <Instagram size={16} /> Instagram
+            </a>
+          </div>
           <a href="https://maps.google.com/?q=Rajdah+Dham,+Sabalpur,+Suriya,+Giridih,+Jharkhand" target="_blank" rel="noreferrer">
             <MapPin size={16} /> Rajdah Dham, Sabalpur, Suriya, Giridih, Jharkhand 825320
           </a>
