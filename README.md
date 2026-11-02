@@ -15,6 +15,8 @@ A bilingual website for Rajdah Dham, Giridih, Jharkhand. The frontend is built w
 
 ```
 rajdahdham/
+  Dockerfile            - Multi-stage production image for the site and API
+  render.yaml           - Render Blueprint for a single web service
   backend/
     app.py              - FastAPI REST API
     requirements.txt    - Python dependencies
@@ -69,6 +71,31 @@ cd frontend
 npm install
 npm start                  # Runs on http://localhost:3000
 ```
+
+## Deploying to Render
+
+The root `render.yaml` deploys the React site and FastAPI backend together as
+one Docker web service. FastAPI serves the production React build, API requests,
+images, and client-side routes from the same origin; no separate frontend URL
+or production CORS configuration is needed.
+
+1. In Render, create a **Blueprint** and select this GitHub repository.
+2. Keep `render.yaml` as the Blueprint path and apply the `rajdahdham` web service.
+3. Render builds the root `Dockerfile` and uses its managed `PORT` environment
+   variable. The `/api/health` endpoint is used for health checks.
+
+There are no required deployment secrets. Local `.env` files are excluded from
+both Git and the Docker build context. The default Render free plan may spin
+down after inactivity.
+
+To build and run the same image locally:
+
+```bash
+docker build -t rajdahdham .
+docker run --rm -p 8000:8000 rajdahdham
+```
+
+Open http://localhost:8000.
 
 ## API Endpoints
 

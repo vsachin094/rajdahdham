@@ -3,7 +3,9 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from app import get_members, load_events, load_videos
+from fastapi import HTTPException
+
+from app import get_members, load_events, load_videos, serve_frontend
 
 
 class EventRegistryTests(unittest.TestCase):
@@ -176,6 +178,50 @@ class MembersYamlTests(unittest.TestCase):
                 self.assertTrue(person["name"])
                 self.assertTrue(person["role"])
                 self.assertTrue(person["image"].startswith("/images/members/"))
+
+
+class FrontendServingTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary_directory = tempfile.TemporaryDirectory()
+        self.build_root = Path(self.temporary_directory.name)
+        (self.build_root / "index.html").write_text("<main>Rajdah Dham</main>", encoding="utf-8")
+        (self.build_root / "static").mkdir()
+        (self.build_root / "static" / "app.js").write_text("window.app = true;", encoding="utf-8")
+
+    def tearDown(self):
+        self.temporary_directory.cleanup()
+
+    def test_client_side_routes_serve_frontend_entry_point(self):
+        with patch("app.FRONTEND_BUILD_ROOT", self.build_root):
+            response = serve_frontend("about")
+
+        self.assertEqual(Path(response.path).resolve(), (self.build_root / "index.html").resolve())
+
+    def test_existing_frontend_assets_are_served_directly(self):
+        with patch("app.FRONTEND_BUILD_ROOT", self.build_root):
+            response = serve_frontend("static/app.js")
+
+        self.assertEqual(
+            Path(response.path).resolve(),
+            (self.build_root / "static" / "app.js").resolve(),
+        )
+
+    def test_missing_asset_and_unknown_api_paths_remain_not_found(self):
+        with patch("app.FRONTEND_BUILD_ROOT", self.build_root):
+            with self.assertRaises(HTTPException) as missing_asset:
+                serve_frontend("static/missing.js")
+            with self.assertRaises(HTTPException) as unknown_api:
+                serve_frontend("api/not-a-route")
+
+        self.assertEqual(missing_asset.exception.status_code, 404)
+        self.assertEqual(unknown_api.exception.status_code, 404)
+
+    def test_frontend_path_traversal_is_not_served(self):
+        with patch("app.FRONTEND_BUILD_ROOT", self.build_root):
+            with self.assertRaises(HTTPException) as traversal:
+                serve_frontend("../outside.html")
+
+        self.assertEqual(traversal.exception.status_code, 404)
 
 
 if __name__ == "__main__":

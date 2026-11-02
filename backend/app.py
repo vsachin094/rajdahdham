@@ -6,6 +6,7 @@ from urllib.parse import parse_qs, urlparse
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 import yaml
@@ -25,6 +26,7 @@ EVENT_IMAGE_ROOT = Path(__file__).parent.parent / "frontend" / "public" / "image
 PUBLIC_IMAGE_ROOT = Path(__file__).parent.parent / "frontend" / "public" / "images"
 VIDEOS_PATH = Path(__file__).parent / "content" / "videos.yaml"
 MEMBERS_PATH = Path(__file__).parent / "content" / "members.yaml"
+FRONTEND_BUILD_ROOT = Path(__file__).parent.parent / "frontend" / "build"
 EVENT_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
 
@@ -471,6 +473,26 @@ def submit_contact(submission: ContactSubmission):
         status_code=501,
         detail="Contact form delivery is not configured.",
     )
+
+
+@app.get("/{file_path:path}", include_in_schema=False)
+def serve_frontend(file_path: str):
+    if file_path == "api" or file_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="Not Found")
+
+    build_root = FRONTEND_BUILD_ROOT.resolve()
+    requested_file = (build_root / file_path).resolve()
+    if not requested_file.is_relative_to(build_root):
+        raise HTTPException(status_code=404, detail="Not Found")
+    if requested_file.is_file():
+        return FileResponse(requested_file)
+    if Path(file_path).suffix:
+        raise HTTPException(status_code=404, detail="Not Found")
+
+    index_file = build_root / "index.html"
+    if not index_file.is_file():
+        raise HTTPException(status_code=404, detail="Frontend build not found.")
+    return FileResponse(index_file)
 
 
 if __name__ == "__main__":
