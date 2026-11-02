@@ -1,6 +1,17 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 const LanguageContext = createContext();
+const LANGUAGE_PREFERENCE_KEY = 'rajdahdham-language';
+
+export function languageForLocation(location) {
+  const countryCode = typeof location?.country_code === 'string'
+    ? location.country_code.trim().toUpperCase()
+    : '';
+  const region = typeof location?.region === 'string'
+    ? location.region.trim().toLowerCase()
+    : '';
+  return countryCode === 'IN' && region === 'jharkhand' ? 'hi' : 'en';
+}
 
 export const translations = {
   en: {
@@ -152,7 +163,64 @@ export function useLanguage() {
 }
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState('en');
+  const hasSavedPreference = useRef(false);
+  const hasUserPreference = useRef(false);
+  const [lang, setCurrentLanguage] = useState(() => {
+    try {
+      const savedLanguage = window.localStorage.getItem(LANGUAGE_PREFERENCE_KEY);
+      if (savedLanguage === 'en' || savedLanguage === 'hi') {
+        hasSavedPreference.current = true;
+        hasUserPreference.current = true;
+        return savedLanguage;
+      }
+    } catch (error) {
+      console.warn('Unable to read the saved language preference.', error);
+    }
+    return 'en';
+  });
+
+  useEffect(() => {
+    if (hasSavedPreference.current) return undefined;
+
+    let active = true;
+    const controller = new AbortController();
+    fetch('https://ipapi.co/json/', { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Location lookup failed with status ${response.status}.`);
+        }
+        return response.json();
+      })
+      .then((location) => {
+        if (active && !hasUserPreference.current) {
+          setCurrentLanguage(languageForLocation(location));
+        }
+      })
+      .catch((error) => {
+        if (active && error.name !== 'AbortError') {
+          console.warn('Unable to determine visitor location; keeping English default.', error);
+        }
+      });
+
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, []);
+
+  const setLang = (nextLanguage) => {
+    const language = typeof nextLanguage === 'function' ? nextLanguage(lang) : nextLanguage;
+    if (language !== 'en' && language !== 'hi') return;
+
+    hasUserPreference.current = true;
+    setCurrentLanguage(language);
+    try {
+      window.localStorage.setItem(LANGUAGE_PREFERENCE_KEY, language);
+    } catch (error) {
+      console.warn('Unable to save the language preference.', error);
+    }
+  };
+
   const t = translations[lang] || translations.en;
   return (
     <LanguageContext.Provider value={{ lang, setLang, t }}>

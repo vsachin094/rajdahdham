@@ -54,14 +54,6 @@ export default function Header() {
               <Phone aria-hidden="true" size={15} />
               +91 99395 68818
             </a>
-            <button
-              type="button"
-              onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
-              className="language-toggle"
-              aria-label={lang === 'en' ? 'Switch language to Hindi' : 'Switch language to English'}
-            >
-              {lang === 'en' ? 'हिंदी' : 'English'}
-            </button>
           </div>
         </div>
       </div>
@@ -84,6 +76,16 @@ export default function Header() {
           </div>
 
           <div className="nav-actions">
+            <button
+              type="button"
+              onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
+              className="language-toggle"
+              aria-label={lang === 'en' ? 'Switch language to Hindi' : 'Switch language to English'}
+            >
+              <span className={lang === 'hi' ? 'language-option-active' : ''}>HI</span>
+              <span aria-hidden="true">-</span>
+              <span className={lang === 'en' ? 'language-option-active' : ''}>EN</span>
+            </button>
             <Link to="/donate" className="donate-link">
               {lang === 'en' ? 'Donate' : 'दान करें'}
             </Link>

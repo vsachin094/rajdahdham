@@ -88,6 +88,12 @@ There are no required deployment secrets. Local `.env` files are excluded from
 both Git and the Docker build context. The default Render free plan may spin
 down after inactivity.
 
+On a first visit without a saved language preference, the site uses ipapi.co's
+IP-based location lookup to select Hindi for visitors identified in Jharkhand,
+India. The lookup is performed by the visitor's browser; a chosen language is
+saved locally and takes precedence on future visits. If lookup is unavailable,
+the site defaults to English.
+
 To build and run the same image locally:
 
 ```bash
