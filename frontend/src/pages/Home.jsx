@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, CalendarDays, Clock3, Heart, Phone } from 'lucide-react';
+import { ArrowRight, CalendarDays, Clock3, Eye, Heart, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import AboutPreview from '../components/AboutPreview';
@@ -21,7 +21,7 @@ const previewPhotos = [
   },
 ];
 
-export default function Home() {
+export default function Home({ visitorCount }) {
   const { lang } = useLanguage();
   const [events, setEvents] = useState([]);
   const [eventsError, setEventsError] = useState(false);
@@ -84,60 +84,64 @@ export default function Home() {
           <ArrowRight size={17} />
         </a>
       </section>
+      {visitorCount !== null && (
+        <div className="home-visitor-count" aria-live="polite">
+          <Eye size={15} />
+          <span>
+            {lang === 'en' ? 'Visitors' : 'वेबसाइट विज़िटर'}: {new Intl.NumberFormat(lang === 'en' ? 'en-IN' : 'hi-IN').format(visitorCount)}
+          </span>
+        </div>
+      )}
 
       <AboutPreview />
 
-      <section className="home-story-section home-devotional-section">
-        <div className="home-section-heading">
-          <span className="section-eyebrow"><CalendarDays size={16} /> {lang === 'en' ? 'Devotional calendar' : 'धार्मिक पंचांग'}</span>
-          <h2>{lang === 'en' ? 'Upcoming devotional dates.' : 'आगामी धार्मिक पर्व।'}</h2>
-          <p>{lang === 'en'
-            ? 'Upcoming Hindu festivals and Ekadashi dates for the Rajdah Dham area, based on the local Panchang. These are religious dates, not confirmed temple programmes.'
-            : 'राजदाह धाम क्षेत्र के आगामी हिंदू पर्व और एकादशी की तिथियां, स्थानीय पंचांग के आधार पर। ये धार्मिक तिथियां हैं, मंदिर के पुष्ट कार्यक्रम नहीं।'}</p>
-        </div>
+      {!devotionalDatesError && (
+        <section className="home-story-section home-devotional-section">
+          <div className="home-section-heading">
+            <span className="section-eyebrow"><CalendarDays size={16} /> {lang === 'en' ? 'Devotional calendar' : 'धार्मिक पंचांग'}</span>
+            <h2>{lang === 'en' ? 'Upcoming devotional dates.' : 'आगामी धार्मिक पर्व।'}</h2>
+            <p>{lang === 'en'
+              ? 'Upcoming Hindu festivals and Ekadashi dates for the Rajdah Dham area, based on the local Panchang. These are religious dates, not confirmed temple programmes.'
+              : 'राजदाह धाम क्षेत्र के आगामी हिंदू पर्व और एकादशी की तिथियां, स्थानीय पंचांग के आधार पर। ये धार्मिक तिथियां हैं, मंदिर के पुष्ट कार्यक्रम नहीं।'}</p>
+          </div>
 
-        {devotionalDatesError ? (
-          <div className="notice-card" role="alert">
+          {!devotionalDatesLoaded ? (
+            <p className="loading-copy">{lang === 'en' ? 'Calculating upcoming dates…' : 'आगामी तिथियों की गणना हो रही है…'}</p>
+          ) : devotionalDatePreview.length > 0 ? (
+            <div className="home-event-grid">
+              {devotionalDatePreview.map((observance) => (
+                <article className="home-event-card" key={observance.id}>
+                  <div className="home-event-copy">
+                    <span className="home-event-date">
+                      <CalendarDays size={15} />
+                      {new Intl.DateTimeFormat(dateLocale, { day: 'numeric', month: 'long', year: 'numeric' })
+                        .format(new Date(`${observance.date}T12:00:00`))}
+                    </span>
+                    <h3>{observance.title[lang]}</h3>
+                    <p>{observance.details[lang]}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p className="loading-copy">{lang === 'en' ? 'No upcoming observances found.' : 'कोई आगामी धार्मिक पर्व नहीं मिला।'}</p>
+          )}
+
+          <a
+            className="text-link home-all-events-link"
+            href="https://maps.google.com/?q=Rajdah+Dham,+Sabalpur,+Suriya,+Giridih,+Jharkhand"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {lang === 'en' ? 'Plan a visit to Rajdah Dham' : 'राजदाह धाम आने की योजना बनाएं'} <ArrowRight size={17} />
+          </a>
+          <p className="devotional-calendar-note">
             {lang === 'en'
-              ? 'Devotional dates could not be calculated right now. Please try again later.'
-              : 'धार्मिक तिथियों की गणना अभी नहीं हो सकी। कृपया बाद में पुनः प्रयास करें।'}
-          </div>
-        ) : !devotionalDatesLoaded ? (
-          <p className="loading-copy">{lang === 'en' ? 'Calculating upcoming dates…' : 'आगामी तिथियों की गणना हो रही है…'}</p>
-        ) : devotionalDatePreview.length > 0 ? (
-          <div className="home-event-grid">
-            {devotionalDatePreview.map((observance) => (
-              <article className="home-event-card" key={observance.id}>
-                <div className="home-event-copy">
-                  <span className="home-event-date">
-                    <CalendarDays size={15} />
-                    {new Intl.DateTimeFormat(dateLocale, { day: 'numeric', month: 'long', year: 'numeric' })
-                      .format(new Date(`${observance.date}T12:00:00`))}
-                  </span>
-                  <h3>{observance.title[lang]}</h3>
-                  <p>{observance.details[lang]}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <p className="loading-copy">{lang === 'en' ? 'No upcoming observances found.' : 'कोई आगामी धार्मिक पर्व नहीं मिला।'}</p>
-        )}
-
-        <a
-          className="text-link home-all-events-link"
-          href="https://maps.google.com/?q=Rajdah+Dham,+Sabalpur,+Suriya,+Giridih,+Jharkhand"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {lang === 'en' ? 'Plan a visit to Rajdah Dham' : 'राजदाह धाम आने की योजना बनाएं'} <ArrowRight size={17} />
-        </a>
-        <p className="devotional-calendar-note">
-          {lang === 'en'
-            ? 'Dates use Drik Panchanga calculations with approximate local coordinates for the Rajdah Dham area. Observance traditions can vary; contact the Samiti to confirm temple arrangements before travelling.'
-            : 'तिथियां राजदाह धाम क्षेत्र के अनुमानित स्थानीय निर्देशांकों पर द्रिक पंचांग की गणना पर आधारित हैं। परंपराओं में अंतर हो सकता है; यात्रा से पहले मंदिर की व्यवस्था समिति से पुष्टि करें।'}
-        </p>
-      </section>
+              ? 'Dates use Drik Panchanga calculations with approximate local coordinates for the Rajdah Dham area. Observance traditions can vary; contact the Samiti to confirm temple arrangements before travelling.'
+              : 'तिथियां राजदाह धाम क्षेत्र के अनुमानित स्थानीय निर्देशांकों पर द्रिक पंचांग की गणना पर आधारित हैं। परंपराओं में अंतर हो सकता है; यात्रा से पहले मंदिर की व्यवस्था समिति से पुष्टि करें।'}
+          </p>
+        </section>
+      )}
 
       <section className="home-story-section">
         <div className="home-section-heading">

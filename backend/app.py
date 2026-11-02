@@ -1,5 +1,6 @@
 import random
 import re
+import threading
 from datetime import date
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -30,6 +31,8 @@ VIDEOS_PATH = Path(__file__).parent / "content" / "videos.yaml"
 MEMBERS_PATH = Path(__file__).parent / "content" / "members.yaml"
 FRONTEND_BUILD_ROOT = Path(__file__).parent.parent / "frontend" / "build"
 EVENT_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+visitor_count = 0
+VISITOR_COUNT_LOCK = threading.Lock()
 
 
 class ContactSubmission(BaseModel):
@@ -229,6 +232,20 @@ def get_youtube_id(url):
 @app.get("/api/health")
 def health():
     return {"status": "ok", "message": "Rajdah Dham API running"}
+
+
+@app.get("/api/visitor-count")
+def get_visitor_count():
+    with VISITOR_COUNT_LOCK:
+        return {"count": visitor_count}
+
+
+@app.post("/api/visitor-count")
+def increment_visitor_count():
+    global visitor_count
+    with VISITOR_COUNT_LOCK:
+        visitor_count += 1
+        return {"count": visitor_count}
 
 
 @app.get("/api/devotional-dates")

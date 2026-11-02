@@ -5,7 +5,14 @@ from unittest.mock import patch
 
 from fastapi import HTTPException
 
-from app import get_members, load_events, load_videos, serve_frontend
+from app import (
+    get_members,
+    get_visitor_count,
+    increment_visitor_count,
+    load_events,
+    load_videos,
+    serve_frontend,
+)
 
 
 class EventRegistryTests(unittest.TestCase):
@@ -22,6 +29,15 @@ class EventRegistryTests(unittest.TestCase):
     def load_config(self, content):
         self.config_path.write_text(content, encoding="utf-8")
         return load_events(self.config_path, self.image_root)
+
+    def test_visitor_counter_increments_and_returns_current_count(self):
+        previous_count = get_visitor_count()["count"]
+
+        self.assertEqual(
+            increment_visitor_count(),
+            {"count": previous_count + 1},
+        )
+        self.assertEqual(get_visitor_count(), {"count": previous_count + 1})
 
     def test_event_without_images_uses_title_and_optional_details(self):
         (self.image_root / "maha-shivratri").mkdir()

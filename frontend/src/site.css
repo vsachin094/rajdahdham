@@ -614,6 +614,21 @@ button:focus-visible {
   font-size: 12px;
 }
 
+.home-visitor-count {
+  width: min(100% - 48px, 1190px);
+  margin: 14px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  color: var(--site-muted);
+  font-size: 11px;
+}
+
+.home-visitor-count svg {
+  color: var(--site-saffron);
+}
+
 .welcome-item-link > svg {
   margin-left: auto;
   color: var(--site-saffron);
@@ -2472,7 +2487,13 @@ button:focus-visible {
   box-shadow: 0 8px 25px rgba(15, 96, 48, .25);
   color: white;
   text-decoration: none;
-  transition: background .18s ease, transform .18s ease;
+  transition: background .18s ease, transform .18s ease, opacity .18s ease, visibility .18s ease;
+}
+
+.whatsapp-floating-link-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .whatsapp-floating-link svg {
@@ -3013,6 +3034,7 @@ a.contact-detail-card:hover {
   .home-story-section,
   .home-gallery-section,
   .home-donate-section,
+  .home-visitor-count,
   .content-section,
   .footer-main,
   .footer-bottom {

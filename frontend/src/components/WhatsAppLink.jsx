@@ -1,14 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 
 const whatsappUrl = 'https://wa.me/919939568818?text=Namaste%2C%20I%20have%20a%20question%20about%20Rajdah%20Dham.';
 
 export default function WhatsAppLink() {
   const { lang } = useLanguage();
+  const { pathname } = useLocation();
+  const [visible, setVisible] = useState(
+    () => !window.matchMedia('(max-width: 620px)').matches,
+  );
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      if (!window.matchMedia('(max-width: 620px)').matches) {
+        setVisible(true);
+        return;
+      }
+
+      const introSection = document.querySelector(
+        pathname === '/' ? '.welcome-strip' : '.page-heading',
+      );
+      const introBottom = introSection
+        ? introSection.getBoundingClientRect().bottom + window.scrollY
+        : 0;
+      setVisible(window.scrollY > introBottom);
+    };
+
+    updateVisibility();
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('resize', updateVisibility);
+    return () => {
+      window.removeEventListener('scroll', updateVisibility);
+      window.removeEventListener('resize', updateVisibility);
+    };
+  }, [pathname]);
 
   return (
     <a
-      className="whatsapp-floating-link"
+      className={`whatsapp-floating-link${visible ? '' : ' whatsapp-floating-link-hidden'}`}
       href={whatsappUrl}
       target="_blank"
       rel="noreferrer"
