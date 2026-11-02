@@ -1,0 +1,14 @@
+# Add each event here once. Its date decides whether it appears as upcoming or past.
+# Add event photos to frontend/public/images/event_images/<image_dir>/.
+- id: nature-park-inauguration
+  date: "2024-02-03"
+  title: Rajdah Dham Nature Park inaugurated
+  title_hi: राजदाह धाम नेचर पार्क का उद्घाटन
+  summary: Rajdah Dham Nature Park was inaugurated on 3 February 2024 with the then MLA Vinod Singh and MP Annapurna Devi present.
+  summary_hi: राजदाह धाम नेचर पार्क का उद्घाटन 3 फरवरी 2024 को तत्कालीन विधायक विनोद सिंह और सांसद अन्नपूर्णा देवी की उपस्थिति में हुआ।
+  details: The park project began with a foundation stone laid on 9 November 2022. The completed grounds include lawns, a pond, swings and shaded places for visitors and families.
+  details_hi: पार्क परियोजना की आधारशिला 9 नवंबर 2022 को रखी गई। तैयार परिसर में लॉन, तालाब, झूले और आगंतुकों व परिवारों के लिए छायादार स्थान हैं।
+  location: Rajdah Dham Nature Park, Giridih
+  location_hi: राजदाह धाम नेचर पार्क, गिरिडीह
+  banner: /images/site/raj-dah-nature-park-sign.jpg
+  image_dir: nature-park-inauguration

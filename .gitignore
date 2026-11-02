@@ -1,0 +1,26 @@
+# Environment files and local secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node.js
+node_modules/
+
+# Generated frontend output
+/frontend/build/
+/frontend/coverage/
+
+# Python test and tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local operating-system files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-temple-sandalwood;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-temple-ivory text-temple-warmBrown font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-temple-warmBrown;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-temple-ivory
+           bg-gradient-to-r from-temple-saffron to-temple-saffronDark
+           rounded-full shadow-divine hover:shadow-saffron-glow
+           transition-all duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-temple-saffron/50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-temple-saffron
+           border-2 border-temple-antiqueGold
+           rounded-full bg-transparent
+           hover:bg-temple-saffron hover:text-temple-ivory
+           transition-all duration-300;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-temple-warmBrown
+           border-2 border-temple-sandalwood
+           rounded-full bg-transparent
+           hover:bg-temple-cream hover:border-temple-antiqueGold
+           transition-all duration-300;
+  }
+
+  .card-divine {
+    @apply bg-white/80 backdrop-blur-sm border border-temple-sandalwood/50
+           rounded-2xl shadow-divine
+           transition-all duration-500 hover:shadow-divine-lg hover:-translate-y-1;
+  }
+
+  .card-gold {
+    @apply bg-gradient-to-br from-temple-cream to-temple-ivory
+           border border-temple-antiqueGold/30
+           rounded-2xl shadow-divine
+           transition-all duration-500 hover:shadow-gold-glow hover:-translate-y-1;
+  }
+
+  .input-divine {
+    @apply w-full px-5 py-4 text-temple-warmBrown
+           bg-temple-ivory border-2 border-temple-sandalwood
+           rounded-xl placeholder-temple-lightBrown
+           focus:border-temple-saffron focus:ring-2 focus:ring-temple-saffron/20
+           transition-all duration-300;
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28;
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-temple-warmBrown
+           text-center mb-4 animate-slide-up;
+  }
+
+  .section-subtitle {
+    @apply text-lg sm:text-xl text-temple-mediumBrown text-center max-w-2xl mx-auto
+           mb-12 animate-slide-up animate-delay-100;
+  }
+
+  .divine-divider {
+    @apply w-24 h-1 bg-gradient-to-r from-temple-antiqueGold via-temple-saffron to-temple-antiqueGold
+           mx-auto rounded-full;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .bg-hero-pattern {
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(255,119,0,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 50%, rgba(204,160,89,0.1) 0%, transparent 50%);
+  }
+
+  .glass-morphism {
+    @apply bg-white/60 backdrop-blur-md border border-temple-sandalwood/30;
+  }
+
+  .gold-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(204, 160, 89, 0.4),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+}

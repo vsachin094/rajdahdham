@@ -1,0 +1,52 @@
+# Update each person's name, tag, or image path here.
+# Store portraits in frontend/public/images/members/<category>/.
+officers:
+  - name: सुरेश भारती
+    tag: अध्यक्ष
+    image: /images/members/officers/suresh-bharti.jpg
+  - name: राजकुमार वर्मा
+    tag: सचिव
+    image: /images/members/officers/rajkumar-verma.jpg
+  - name: रामेश्वर शर्मा
+    tag: कोषाध्यक्ष
+    image: /images/members/officers/rameshwar-sharma.jpg
+  - name: अनिल शर्मा
+    tag: उपाध्यक्ष
+    image: /images/members/officers/anil-sharma.jpg
+  - name: संजय कुशवाहा
+    tag: उप सचिव
+    image: /images/members/officers/sanjay-kushwaha.jpg
+
+guardians:
+  - name: नारायण मिर्धा
+    tag: संरक्षक
+    image: /images/members/guardians/narayan-mirdha.jpg
+  - name: कुमारेश यादव
+    tag: संरक्षक
+    image: /images/members/guardians/kumaresh-yadav.jpg
+  - name: चंद्रिका सिंह
+    tag: संरक्षक
+    image: /images/members/guardians/chandrika-singh.jpg
+  - name: ललिता देवी
+    tag: संरक्षक
+    image: /images/members/guardians/lalita-devi.jpg
+  - name: प्रियंका देवी
+    tag: संरक्षक
+    image: /images/members/guardians/priyanka-devi.jpg
+
+members:
+  - name: राजेंद्र प्रसाद कुशवाहा
+    tag: सदस्य
+    image: /images/members/committee/rajendra-prasad-kushwaha.jpg
+  - name: बसंत वर्मा
+    tag: सदस्य
+    image: /images/members/committee/basant-verma.jpg
+  - name: धर्मबीर कुमार
+    tag: सदस्य
+    image: /images/members/committee/dharmbir-kumar.jpg
+  - name: रंजीत शर्मा
+    tag: सदस्य
+    image: /images/members/committee/ranjit-sharma.jpg
+  - name: राजेश वर्मा
+    tag: सदस्य
+    image: /images/members/committee/rajesh-verma.jpg
