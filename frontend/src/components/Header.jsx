@@ -76,16 +76,24 @@ export default function Header() {
           </div>
 
           <div className="nav-actions">
-            <button
-              type="button"
-              onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
-              className="language-toggle"
-              aria-label={lang === 'en' ? 'Switch language to Hindi' : 'Switch language to English'}
-            >
-              <span className={lang === 'hi' ? 'language-option-active' : ''}>HI</span>
-              <span aria-hidden="true">-</span>
-              <span className={lang === 'en' ? 'language-option-active' : ''}>EN</span>
-            </button>
+            <div className="language-toggle" role="group" aria-label="Language">
+              <button
+                type="button"
+                onClick={() => setLang('hi')}
+                className={`language-option${lang === 'hi' ? ' language-option-active' : ''}`}
+                aria-pressed={lang === 'hi'}
+              >
+                हिंदी
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                className={`language-option${lang === 'en' ? ' language-option-active' : ''}`}
+                aria-pressed={lang === 'en'}
+              >
+                English
+              </button>
+            </div>
             <Link to="/donate" className="donate-link">
               {lang === 'en' ? 'Donate' : 'दान करें'}
             </Link>

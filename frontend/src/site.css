@@ -84,23 +84,37 @@ button:focus-visible {
 
 .language-toggle {
   min-height: 38px;
-  padding: 0 12px;
+  padding: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
   border: 1px solid var(--site-line);
   border-radius: 999px;
+  background: white;
+}
+
+.language-option {
+  min-height: 30px;
+  padding: 0 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
   background: transparent;
-  color: var(--site-saffron-deep);
+  color: var(--site-muted);
   font: inherit;
+  font-size: 12px;
   font-weight: 700;
-  cursor: pointer;
+  line-height: 1;
   white-space: nowrap;
+  cursor: pointer;
 }
 
-.language-toggle:hover {
-  background: #f8efe2;
-}
-
+.language-option:hover,
 .language-option-active {
-  color: var(--site-ink);
+  background: #f8efe2;
+  color: var(--site-saffron-deep);
 }
 
 .navigation-wrap {
