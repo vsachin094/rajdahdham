@@ -11,6 +11,8 @@ from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 import yaml
 
+from devotional_dates import get_upcoming_observances
+
 load_dotenv()
 
 app = FastAPI(title="Rajdah Dham API", version="1.0.0")
@@ -227,6 +229,11 @@ def get_youtube_id(url):
 @app.get("/api/health")
 def health():
     return {"status": "ok", "message": "Rajdah Dham API running"}
+
+
+@app.get("/api/devotional-dates")
+def get_devotional_dates():
+    return get_upcoming_observances()
 
 
 @app.get("/api/about")

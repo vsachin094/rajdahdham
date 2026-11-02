@@ -19,7 +19,7 @@ rajdahdham/
   render.yaml           - Render Blueprint for a single web service
   backend/
     app.py              - FastAPI REST API
-    requirements.txt    - Python dependencies
+    requirements.txt    - Python dependencies, including Panchanga engine
     content/
       events.yaml       - Upcoming and past events with optional descriptions and image folders
       members.yaml      - Committee members and local portrait paths
@@ -84,6 +84,15 @@ or production CORS configuration is needed.
 3. Render builds the root `Dockerfile` and uses its managed `PORT` environment
    variable. The `/api/health` endpoint is used for health checks.
 
+The project is licensed under GNU AGPL-3.0-or-later. The automatically
+calculated devotional calendar uses `drik-panchanga` and Swiss Ephemeris under
+AGPL licenses. The `LICENSE` file contains the license text, and the website
+footer links to this repository as the corresponding source for the service.
+See [third-party notices](./THIRD_PARTY_NOTICES.md) for dependency attribution.
+The devotional calendar recalculates dates from the current local date using
+approximate coordinates for the Rajdah Dham area. Its selected observances and
+bilingual explanations are curated.
+
 There are no required deployment secrets. Local `.env` files are excluded from
 both Git and the Docker build context. The default Render free plan may spin
 down after inactivity.
@@ -116,6 +125,7 @@ Open http://localhost:8000.
 | `/api/donate/info` | GET | Bank account details for donations |
 | `/api/slider` | GET | Hero slider image URLs |
 | `/api/events` | GET | Event updates and their local photo albums |
+| `/api/devotional-dates` | GET | Upcoming Hindu observances calculated for the Rajdah Dham area |
 | `/api/videos` | GET | YouTube links and bilingual video titles |
 | `/api/contact/submit` | POST | Contact form (returns 501 until delivery is configured) |
 
@@ -127,6 +137,7 @@ Open http://localhost:8000.
 - **Devotional home page:** Centres Rajdah Dham as a place of worship, explains its shrines and local traditions, and keeps park and travel information secondary
 - **Animated hero:** Locally hosted temple photography with an Om-inspired, reduced-motion-aware mandala animation
 - **Backend-managed content:** FastAPI provides the content APIs; the single `backend/content/events.yaml` registry powers Home, Events and Gallery. Events are grouped by date, with upcoming events first and past events newest-first.
+- **Devotional calendar:** Upcoming Ekadashis and selected major Hindu festivals are calculated automatically for the Rajdah Dham area with Drik Panchanga; they are shown separately from Samiti-confirmed events. Traditions may vary, so visitors are asked to confirm temple arrangements before travelling.
 - **Photos and videos:** Gallery keeps locally stored photo albums separate from YouTube videos; video embeds load only after a visitor chooses to play one
 - **Visitor contact:** Contact Us includes an embedded Google Map and directions link; a WhatsApp shortcut is available throughout the site
 - **Location & heritage details:** About covers the Dham's history, shrines, local religious traditions, and Barakar river landscape. Contact includes directions and approximate travel distances. Confirm routes, transport and timings locally before visiting.

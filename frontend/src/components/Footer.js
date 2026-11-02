@@ -47,6 +47,15 @@ export default function Footer() {
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Rajdah Dham Samiti</span>
         <span>{lang === 'en' ? 'Made with reverence in Giridih, Jharkhand.' : 'श्रद्धा के साथ गिरिडीह, झारखंड में निर्मित।'}</span>
+        <span>
+          <a href="https://github.com/vsachin094/rajdahdham" target="_blank" rel="noreferrer">
+            {lang === 'en' ? 'Source code' : 'सोर्स कोड'}
+          </a>
+          {' · '}
+          <a href="https://github.com/vsachin094/rajdahdham/blob/main/LICENSE" target="_blank" rel="noreferrer">
+            AGPL-3.0-or-later
+          </a>
+        </span>
       </div>
     </footer>
   );

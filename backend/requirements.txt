@@ -2,3 +2,5 @@ fastapi>=0.115,<1.0
 uvicorn[standard]>=0.34,<1.0
 python-dotenv==1.0.0
 PyYAML>=6.0,<7
+drik-panchanga==2.0.0
+pyswisseph==2.10.3.2

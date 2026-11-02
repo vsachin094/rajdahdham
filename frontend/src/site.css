@@ -994,6 +994,22 @@ button:focus-visible {
   margin-top: 20px;
 }
 
+.home-devotional-section {
+  background: var(--site-cream);
+}
+
+.home-devotional-section .home-event-card {
+  background: var(--site-paper);
+}
+
+.devotional-calendar-note {
+  max-width: 800px;
+  margin: 14px 0 0;
+  color: var(--site-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
 .nature-feature-card {
   display: flex;
   align-items: end;
@@ -1258,6 +1274,11 @@ button:focus-visible {
   gap: 16px;
   color: var(--site-muted);
   font-size: 11px;
+}
+
+.footer-bottom a {
+  color: inherit;
+  text-underline-offset: 2px;
 }
 
 .page-main {
@@ -2843,6 +2864,13 @@ a.contact-detail-card:hover {
   .footer-bottom,
   .devotion-section {
     width: min(100% - 32px, 1190px);
+  }
+
+  .footer-bottom {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 14px 0;
+    text-align: center;
   }
 
   .devotion-section {
