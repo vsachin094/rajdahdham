@@ -2718,6 +2718,7 @@ a.contact-detail-card:hover {
   }
 
   .desktop-nav-links,
+  .nav-actions > .language-toggle,
   .nav-actions > .donate-link {
     display: none;
   }
@@ -2754,6 +2755,18 @@ a.contact-detail-card:hover {
   .mobile-nav-links .nav-link {
     padding: 12px;
     font-size: 14px;
+  }
+
+  .mobile-language-row {
+    margin-top: 8px;
+    padding: 14px 12px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--site-line);
+    color: var(--site-muted);
+    font-size: 13px;
+    font-weight: 600;
   }
 
   .mobile-donate-link {

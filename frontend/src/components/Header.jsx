@@ -116,6 +116,27 @@ export default function Header() {
                 {lang === 'en' ? item.en : item.hi}
               </NavLink>
             ))}
+            <div className="mobile-language-row">
+              <span>{lang === 'en' ? 'Language' : 'भाषा'}</span>
+              <div className="language-toggle" role="group" aria-label="Language">
+                <button
+                  type="button"
+                  onClick={() => setLang('hi')}
+                  className={`language-option${lang === 'hi' ? ' language-option-active' : ''}`}
+                  aria-pressed={lang === 'hi'}
+                >
+                  हिंदी
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLang('en')}
+                  className={`language-option${lang === 'en' ? ' language-option-active' : ''}`}
+                  aria-pressed={lang === 'en'}
+                >
+                  English
+                </button>
+              </div>
+            </div>
             <Link to="/donate" className="mobile-donate-link">
               {lang === 'en' ? 'Donate to Rajdah Dham' : 'राजदाह धाम में दान करें'}
             </Link>
